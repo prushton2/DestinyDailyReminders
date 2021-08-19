@@ -28,7 +28,6 @@ async def check_inventory():
     print("Daily Reset")
 
 
-
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Remind demonater to get his mods lol"))
