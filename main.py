@@ -8,20 +8,23 @@ import os
 import colorama
 import time
 
-intents = {}
+
 
 
 jsm = __import__("jsonmanager")
-
-jsonmanager = jsm(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
-
-config = jsonmanager.load()
-
-bot = commands.Bot(command_prefix= config.load()["prefix"], intents=intents)
+cc = __import__("comparecollections")
+gv = __import__("getvendors")
 
 
-@tasks.loop(hours=24)
-async def remove_score():
+jsonmanager = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
+
+config = jsonmanager
+
+bot = commands.Bot(command_prefix= "==")
+
+
+@tasks.loop(minutes=30)
+async def check_inventory():
     print("Daily Reset")
 
 
@@ -32,9 +35,11 @@ async def on_ready():
     print("Bot is ready")
 
 @bot.event
-async def on_message(ctx):
-    if(ctx.message.content.startswith("test")):
-        ctx.channel.send("omfg wow")
+async def on_message(message):
+    if(message.content.startswith("==gv")):
+        user = config.load()["usersToCheck"][0]
+        print("---------")
+        print(gv.getVendorData(user[0],user[1],user[2]))
 
 
 bot.run(config.load()["token"])
