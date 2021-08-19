@@ -1,5 +1,5 @@
 {
-    "token":"NzAxNDQzMDA1NzMwNjUyMjYx.XpxjtA.m___gTHu8bwPo7tgIn9Em_E-Xlc",
-    "BungieApiKey":"d16ea396820e48e7bfec254ab512eec4",
-    "OAuthClientID": 36213
+    "token":"<bot token here>",
+    "BungieApiKey":"<API key here>",
+    "OAuthClientID": <Oauth code here>
 }
