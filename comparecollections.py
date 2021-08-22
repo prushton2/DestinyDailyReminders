@@ -6,8 +6,6 @@ import os
 jsm = __import__("jsonmanager")
 jsonmanager = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
 apiKey = jsonmanager.load()["apiKey"]
-test = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "test.json")))
-
 
 getVendors = __import__("getvendors")
 
@@ -26,8 +24,6 @@ def compareCollections(userInformation, mods):
     url = f"https://bungie.net/Platform/Destiny2/{membershipType}/Profile/{destinyMembershipId}/?components=800"
 
     res = requests.get(url, headers=HEADERS)
-    
-    test.save(json.loads(res.text))
 
     collections = json.loads(res.text)["Response"]["profileCollectibles"]["data"]["collectibles"]
 
