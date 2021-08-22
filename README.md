@@ -15,7 +15,7 @@ I could use Oauth, but I don't want to deal with that security.
     "apiKey": "<api key>",
     "Charlemagne-channel-id":"<api for channel of daily updates>",
     "usersToCheck": [
-        ["<membershipType>", "<membershipID>", "<characterID>"]
+        ["<membershipType>", "<membershipID>", "<characterID>", "<discordId>"]
     ]
 }
 }
