@@ -8,9 +8,6 @@ import os
 import colorama
 import time
 
-
-
-
 jsm = __import__("jsonmanager")
 cc = __import__("comparecollections")
 gv = __import__("getvendors")
@@ -35,8 +32,12 @@ async def on_ready():
 async def on_message(message):
 
     if(message.channel.id == int(config.load()["Charlemagne-channel-id"])):
-        cc.compareCollections  
-        gv.getVendorData(message)
+        mods, name = gv.getVendorData(message)
+        neededMods = None
+        for i in config.load()["usersToCheck"]:
+            neededMods = (cc.compareCollections(i, mods))
+            user = await bot.fetch_user(int(i[3]))
+            await user.send(f"You are missing {', '.join(neededMods)} from {name}")
 
     if(message.content.startswith("==gv")):
         user = config.load()["usersToCheck"][0]
