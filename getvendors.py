@@ -31,4 +31,4 @@ def getVendorData(message): #Takes the message itself (not text)
             if(dictionary[j] == i):
                 responseData.append(j)
 
-    return responseData
+    return responseData, vendordict["title"].split(",")[0]
