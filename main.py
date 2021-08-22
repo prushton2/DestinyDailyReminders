@@ -16,9 +16,7 @@ cc = __import__("comparecollections")
 gv = __import__("getvendors")
 
 
-jsonmanager = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
-
-config = jsonmanager
+config = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
 
 bot = commands.Bot(command_prefix= "==")
 
@@ -37,7 +35,8 @@ async def on_ready():
 async def on_message(message):
 
     if(message.channel.id == int(config.load()["Charlemagne-channel-id"])):
-        print(gv.getVendorData(message))
+        cc.compareCollections  
+        gv.getVendorData(message)
 
     if(message.content.startswith("==gv")):
         user = config.load()["usersToCheck"][0]
