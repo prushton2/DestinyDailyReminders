@@ -35,6 +35,10 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+
+    if(message.channel.id == int(config.load()["Charlemagne-channel-id"])):
+        print(gv.getVendorData(message))
+
     if(message.content.startswith("==gv")):
         user = config.load()["usersToCheck"][0]
         print("---------")
