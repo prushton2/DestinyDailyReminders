@@ -21,7 +21,7 @@ config = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__)
 
 bot = commands.Bot(command_prefix= "==")
 slash = SlashCommand(bot, sync_commands=True) # Declares slash commands through the client.
-guild_ids = [521379436424331265, 879125337924071524]
+# guild_ids = [521379436424331265, 879125337924071524]
 
 @tasks.loop(minutes=30)
 async def check_inventory():
@@ -57,7 +57,7 @@ async def on_message(message):
                  option_type=3,
                  required=False
                )
-             ], guild_ids=guild_ids)
+             ])#, guild_ids=guild_ids)
 
 async def registerme(ctx, url: str):
     membershipType = url.split("/")[3]
@@ -85,7 +85,7 @@ async def registerme(ctx, url: str):
     config.save(newConfig)
 
 @slash.slash(name="unregisterme",
-             description="Registers you with the bot",guild_ids=guild_ids)
+             description="Registers you with the bot")#,guild_ids=guild_ids)
 
 async def unregisterme(ctx):
 
