@@ -21,7 +21,7 @@ config = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__)
 
 bot = commands.Bot(command_prefix= "==")
 slash = SlashCommand(bot, sync_commands=True) # Declares slash commands through the client.
-guild_ids = [521379436424331265, 521379436424331265]
+guild_ids = [521379436424331265, 879125337924071524]
 
 @tasks.loop(minutes=30)
 async def check_inventory():
