@@ -15,7 +15,7 @@ gv = __import__("getvendors")
 
 config = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
 
-bot = commands.Bot(command_prefix= "==")
+bot = commands.Bot(command_prefix= ">")
 
 @tasks.loop(minutes=30)
 async def check_inventory():
@@ -27,24 +27,25 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Remind demonater to get his mods lol"))
     print("Bot is ready")
 
-@bot.event
-async def on_message(message):
+# @bot.event
+# async def on_message(message):
 
-    if(message.channel.id == int(config.load()["Charlemagne-channel-id"])):
-        mods, name = gv.getVendorData(message)
-        neededMods = None
-        for i in config.load()["usersToCheck"]:
-            neededMods = (cc.compareCollections(i, mods))
-            user = await bot.fetch_user(int(i[3]))
-            await user.send(f"You are missing {', '.join(neededMods)} from {name}")
-
-
+#     if(message.channel.id == int(config.load()["Charlemagne-channel-id"])):
+#         mods, name = gv.getVendorData(message)
+#         neededMods = None
+#         for i in config.load()["usersToCheck"]:
+#             neededMods = (cc.compareCollections(i, mods))
+#             user = await bot.fetch_user(int(i[3]))
+#             await user.send(f"You are missing {', '.join(neededMods)} from {name}")
 
 
 
 
 
-async def registerme(ctx, url: str):
+
+@bot.command(description = "Pay someone else a specified amount of money", brief="Pay someone")
+async def registerme(ctx, url):
+    print("run")
     membershipType = url.split("/")[3]
     destinyMembershipId = url.split("/")[4]
     characterId = url.split("/")[5]
