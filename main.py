@@ -4,9 +4,6 @@ import asyncio
 from discord.ext import commands
 from discord.ext import tasks
 
-from discord_slash import SlashCommand
-from discord_slash.utils.manage_commands import create_option
-
 import os
 import colorama
 import time
@@ -19,8 +16,6 @@ gv = __import__("getvendors")
 config = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
 
 bot = commands.Bot(command_prefix= "==")
-slash = SlashCommand(bot, sync_commands=True) # Declares slash commands through the client.
-guild_ids = [521379436424331265, 879125337924071524]
 
 @tasks.loop(minutes=30)
 async def check_inventory():
@@ -47,16 +42,7 @@ async def on_message(message):
 
 
 
-@slash.slash(name="registerme",
-             description="Registers you with the bot",
-             options=[
-               create_option(
-                 name="url",
-                 description="Enter the braytech URL",
-                 option_type=3,
-                 required=False
-               )
-             ], guild_ids=guild_ids)
+
 
 async def registerme(ctx, url: str):
     membershipType = url.split("/")[3]
@@ -83,8 +69,6 @@ async def registerme(ctx, url: str):
 
     config.save(newConfig)
 
-@slash.slash(name="unregisterme",
-             description="Registers you with the bot",guild_ids=guild_ids)
 
 async def unregisterme(ctx):
 
