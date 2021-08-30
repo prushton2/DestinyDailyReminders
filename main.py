@@ -1,6 +1,5 @@
 import discord
 import asyncio
-import pafy
 
 from discord.ext import commands
 from discord.ext import tasks
