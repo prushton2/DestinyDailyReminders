@@ -40,11 +40,6 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-
-
-
-
-
 @bot.command(description = "Pay someone else a specified amount of money", brief="Pay someone")
 async def registerme(ctx, url):
     print("run")
@@ -72,7 +67,7 @@ async def registerme(ctx, url):
 
     config.save(newConfig)
 
-
+@bot.command(description = "Pay someone else a specified amount of money", brief="Pay someone")
 async def unregisterme(ctx):
 
 
