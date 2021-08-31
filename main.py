@@ -31,22 +31,28 @@ async def on_ready():
 async def on_message(message):
 
     if(message.channel.id == int(config.load()["Charlemagne-channel-id"])):
-        print("Getting vendor data")
+        print("--------------------------------- Getting vendor data")
         mods, name = gv.getVendorData(message)
         print(f"Got vendor data: {mods}, {name}")
 
         neededMods = None
 
         for i in config.load()["usersToCheck"]:
-            print(f"-------------------- {i[3]} --------------------")
+
+            print(f"------------- {i[3]}")
             print("Comparing collections")
+
             neededMods = (cc.compareCollections(i, mods))
-            print(f"User {i[3]} needs {neededMods}")
+
+            print(f"User {i[3]} needs {neededMods} from {name}")
             print(f"Getting user {i[3]}")
             user = await bot.fetch_user(int(i[3]))
             print(f"Retrieved user {user}")
             print("Sending message")
-            await user.send(f"You are missing {', '.join(neededMods)} from {name}")
+
+            if(neededMods != []):
+                print("Sending message")
+                await user.send(f"You are missing {', '.join(neededMods)} from {name}")
             print("Complete!")
 
 
