@@ -74,14 +74,14 @@ async def registerme(ctx, username):
     username = username.replace("#", "%23") #using # in a url has bad reporcussions so i replace it
     res = requests.get(f"https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/{username}", headers=HEADERS)
     userdata = json.loads(res.text)['Response'][0]
+    
     membershipType = userdata["membershipType"]
     destinyMembershipId = userdata["membershipId"]
+    
     res = requests.get(f"https://www.bungie.net/Platform/Destiny2/{membershipType}/Profile/{destinyMembershipId}?components=100", headers=HEADERS)
-    userdata = json.loads(res.text)
-    print(userdata)
-    userdata = userdata['Response']
+    userdata = json.loads(res.text)['Response']
+    
     characterId = userdata["profile"]["data"]["characterIds"][0]
-    print(ctx.author.id)
     discordID = str(ctx.author.id)
 
     users = config.load()["usersToCheck"]
