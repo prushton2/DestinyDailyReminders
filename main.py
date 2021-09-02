@@ -1,5 +1,8 @@
 import discord
 import asyncio
+from discord import user
+import requests
+import json
 
 from discord.ext import commands
 from discord.ext import tasks
@@ -16,6 +19,11 @@ gv = __import__("getvendors")
 config = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
 
 bot = commands.Bot(command_prefix= ">")
+
+HEADERS = {
+    "X-API-KEY": config.load()["apiKey"]
+}
+
 
 @tasks.loop(minutes=30)
 async def check_inventory():
@@ -62,11 +70,18 @@ async def on_message(message):
     await bot.process_commands(message)
 
 @bot.command(description = "Pay someone else a specified amount of money", brief="Pay someone")
-async def registerme(ctx, url):
-    print("run")
-    membershipType = url.split("/")[3]
-    destinyMembershipId = url.split("/")[4]
-    characterId = url.split("/")[5]
+async def registerme(ctx, username):
+    username = username.replace("#", "%23") #using # in a url has bad reporcussions so i replace it
+    res = requests.get(f"https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/{username}", headers=HEADERS)
+    userdata = json.loads(res.text)['Response'][0]
+    membershipType = userdata["membershipType"]
+    destinyMembershipId = userdata["membershipId"]
+    res = requests.get(f"https://www.bungie.net/Platform/Destiny2/{membershipType}/Profile/{destinyMembershipId}?components=100", headers=HEADERS)
+    userdata = json.loads(res.text)
+    print(userdata)
+    userdata = userdata['Response']
+    characterId = userdata["profile"]["data"]["characterIds"][0]
+    print(ctx.author.id)
     discordID = str(ctx.author.id)
 
     users = config.load()["usersToCheck"]
