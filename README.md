@@ -1,5 +1,5 @@
-# demonaterreminders
-Reminds my friend to buy mods in D2 because he's bad and cant do it himself
+# DestinyDailyReminders
+Reminds people to buy mods in D2
 
 
 ### Prerequisites
@@ -9,8 +9,8 @@ I could use Oauth, but I don't want to deal with that security.
 
 ### Commands
 
-\>registerme [braytech url]<br>
-Sign into [braytech.org](https://braytech.org) and paste the url into the bot for it to remind you about daily mods<br>
+\>registerme [Bungie Name]<br>
+Enter your bungie name (ex A_dmg04#4754) to sign up for daily reminders
 
 \>unregisterme <br>
 Removes you from the list of people the bot will message
