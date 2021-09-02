@@ -48,11 +48,14 @@ async def on_message(message):
             print(f"Getting user {i[3]}")
             user = await bot.fetch_user(int(i[3]))
             print(f"Retrieved user {user}")
-            print("Sending message")
+
+            print("Checking to send message")
 
             if(neededMods != []):
                 print("Sending message")
                 await user.send(f"You are missing {', '.join(neededMods)} from {name}")
+            else:
+                print("Didnt send message, user doesnt need mods")
             print("Complete!")
 
 
