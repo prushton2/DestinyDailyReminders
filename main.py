@@ -1,12 +1,8 @@
 import discord
 import asyncio
-import pafy
 
 from discord.ext import commands
 from discord.ext import tasks
-
-from discord_slash import SlashCommand
-from discord_slash.utils.manage_commands import create_option
 
 import os
 import colorama
@@ -19,9 +15,7 @@ gv = __import__("getvendors")
 
 config = jsm.JsonManager(os.path.realpath(os.path.join(os.path.dirname(__file__), "config.json")))
 
-bot = commands.Bot(command_prefix= "==")
-slash = SlashCommand(bot, sync_commands=True) # Declares slash commands through the client.
-guild_ids = [521379436424331265, 879125337924071524]
+bot = commands.Bot(command_prefix= ">")
 
 @tasks.loop(minutes=30)
 async def check_inventory():
@@ -30,36 +24,46 @@ async def check_inventory():
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="Remind demonater to get his mods lol"))
+    await bot.change_presence(activity=discord.Game(name="Remind people to get their mods lol"))
     print("Bot is ready")
 
 @bot.event
 async def on_message(message):
 
     if(message.channel.id == int(config.load()["Charlemagne-channel-id"])):
+        print("--------------------------------- Getting vendor data")
         mods, name = gv.getVendorData(message)
+        print(f"Got vendor data: {mods}, {name}")
+
         neededMods = None
+
         for i in config.load()["usersToCheck"]:
+
+            print(f"------------- {i[3]}")
+            print("Comparing collections")
+
             neededMods = (cc.compareCollections(i, mods))
+
+            print(f"User {i[3]} needs {neededMods} from {name}")
+            print(f"Getting user {i[3]}")
             user = await bot.fetch_user(int(i[3]))
-            await user.send(f"You are missing {', '.join(neededMods)} from {name}")
+            print(f"Retrieved user {user}")
+
+            print("Checking to send message")
+
+            if(neededMods != []):
+                print("Sending message")
+                await user.send(f"You are missing {', '.join(neededMods)} from {name}")
+            else:
+                print("Didnt send message, user doesnt need mods")
+            print("Complete!")
 
 
+    await bot.process_commands(message)
 
-
-
-@slash.slash(name="registerme",
-             description="Registers you with the bot",
-             options=[
-               create_option(
-                 name="url",
-                 description="Enter the braytech URL",
-                 option_type=3,
-                 required=False
-               )
-             ], guild_ids=guild_ids)
-
-async def registerme(ctx, url: str):
+@bot.command(description = "Pay someone else a specified amount of money", brief="Pay someone")
+async def registerme(ctx, url):
+    print("run")
     membershipType = url.split("/")[3]
     destinyMembershipId = url.split("/")[4]
     characterId = url.split("/")[5]
@@ -84,9 +88,7 @@ async def registerme(ctx, url: str):
 
     config.save(newConfig)
 
-@slash.slash(name="unregisterme",
-             description="Registers you with the bot",guild_ids=guild_ids)
-
+@bot.command(description = "Pay someone else a specified amount of money", brief="Pay someone")
 async def unregisterme(ctx):
 
 
