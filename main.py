@@ -32,7 +32,7 @@ async def check_inventory():
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="Remind people to get their mods lol"))
+    await bot.change_presence(activity=discord.Game(name="Reminding people to get their mods lol"))
     print("Bot is ready")
 
 @bot.event
@@ -69,7 +69,7 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-@bot.command(description = "Pay someone else a specified amount of money", brief="Pay someone")
+@bot.command(description = ">registerme <Bungie Name> | Registers you with the notifications", brief="Get Notified")
 async def registerme(ctx, username):
     username = username.replace("#", "%23") #using # in a url has bad reporcussions so i replace it
     res = requests.get(f"https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/{username}", headers=HEADERS)
@@ -103,7 +103,7 @@ async def registerme(ctx, username):
 
     config.save(newConfig)
 
-@bot.command(description = "Pay someone else a specified amount of money", brief="Pay someone")
+@bot.command(description = ">unregisterme | Removes you from the bots message list", brief="Stop Notifications")
 async def unregisterme(ctx):
 
 
