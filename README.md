@@ -21,7 +21,7 @@ Removes you from the list of people the bot will message
 {
     "token": "<bot token>",
     "apiKey": "<api key>",
-    "Charlemagne-channel-id":"<api for channel of daily updates>",
+    "Charlemagne-channel-id":"<ID for channel of daily updates>",
     "usersToCheck": []
 }
 
