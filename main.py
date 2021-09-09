@@ -71,10 +71,17 @@ async def on_message(message):
 
 @bot.command(description = ">registerme <Bungie Name> | Registers you with the notifications", brief="Get Notified")
 async def registerme(ctx, username):
+    username = ctx.message.content.split(" ")[1:]
+    username = " ".join(username)
     username = username.replace("#", "%23") #using # in a url has bad reporcussions so i replace it
-    res = requests.get(f"https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/{username}", headers=HEADERS)
-    userdata = json.loads(res.text)['Response'][0]
-    
+
+    try: #If the json cant load the first item in the list of responses, it is returning an error. Could be done better
+        res = requests.get(f"https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/{username}", headers=HEADERS)
+        userdata = json.loads(res.text)['Response'][0]
+    except:
+        await ctx.send("Could not find you. Did you type your name wrong?")
+        return
+
     membershipType = userdata["membershipType"]
     destinyMembershipId = userdata["membershipId"]
     
@@ -122,8 +129,7 @@ async def unregisterme(ctx):
 
     config.save(newConfig)
 
-
-
+    await ctx.send("removed you from the list.")
 
 
 bot.run(config.load()["token"])
