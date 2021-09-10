@@ -10,7 +10,7 @@ I could use Oauth, but I don't want to deal with that security.
 ### Commands
 
 \>registerme [Bungie Name]<br>
-Enter your bungie name (ex A_dmg04#4754) to sign up for daily reminders
+Enter your bungie name (ex John#4562) to sign up for daily reminders
 
 \>unregisterme <br>
 Removes you from the list of people the bot will message
