@@ -26,6 +26,3 @@ Removes you from the list of people the bot will message
 }
 
 ```
-
-### TODO:
-- Change the sign up command to allow someone to input their bungie name isntead of a scuffed url
